@@ -1,21 +1,14 @@
-import express, { type Request, type Response } from "express";
-import { prisma } from "./lib/prisma";
+import express from "express";
+import productRoutes from "./routes/products";
 
 const app = express();
 
-app.get("/", async (req: Request, res: Response) => {
-    const data = await prisma.product.findMany();
-    if(data) {
-        console.log(data);
-    } else {
-        console.log("not data");
-    }
+app.use(express.json());
 
-    res.status(200).json({
-        message: "this is the Home page"
-    })
-});
+app.use("/products", productRoutes);
 
 app.listen(3000, () => {
-    console.log('Server is listening on the PORT: 3000');
+  console.log(
+    "Server running on port 3000"
+  );
 });
